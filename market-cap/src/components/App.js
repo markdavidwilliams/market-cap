@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import MarketChart from './MarketChart';
-import logo from '../logo.svg';
 
 import '../styles/App.css';
 
@@ -39,9 +38,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <React.Fragment>
-          <img src={logo} className="App-logo" alt="logo" />
-        </React.Fragment>
         <MarketChart labels={this.state.labels} marketCaps={this.state.marketCaps} />
       </div>
     );
