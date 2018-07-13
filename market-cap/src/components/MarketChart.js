@@ -5,20 +5,56 @@ class MarketChart extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
+            data: {
+                labels: [],
+                datasets: [{
+                    data: [],
+                    backgroundColor: [],
+                    hoverBackgroundColor: [],
+                }],
+            },
         }
     }
 
-    componentDidUpdate(prevProps) {
-        if(this.props !== prevProps) {
-            this.setState({data: this.props.data });
-        }
-    }
+   componentDidUpdate(prevProps) {
+       if(prevProps !== this.props) {
+          this.setState({
+              data: {
+                labels: this.props.labels,
+                datasets: [{
+                    data: this.props.marketCaps,
+                    backgroundColor: [
+                        '#FF6384',
+                        '#36A2EB',
+                        '#FFCE56',
+                    ],
+                    hoverBackgroundColor: [
+                        '#FF6384',
+                        '#36A2EB',
+                        '#FFCE56',
+                     ]
+                    }]
+                }
+            }
+          )
+       }
+   }
+
 
     render() {
         return (
-            <React.Fragment>
-            </React.Fragment>
+            <div>
+                <Doughnut
+                data={this.state.data}
+                options={{
+                    title: {
+                      display: true,
+                      text: 'Market Caps',
+                      fontSize: 25,
+                    },
+                  }}
+                datasetKeyProvider={() => Math.random()} />
+            </div>
         )
     }
 }

@@ -12,8 +12,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      data: [],
       labels: [],
+      marketCaps: [],
     }
   }
 
@@ -22,15 +22,15 @@ class App extends Component {
       .get(URL)
       .then(response => {
           const data = response.data.data.slice();
-          console.log(data)
-          let output = [];
+          let labelOutput = [];
+          let marketCapOutput = [];
           data.forEach(currency => {
-            output.push(currency.name);
+            labelOutput.push(currency.name);
+            marketCapOutput.push(currency.quotes.USD.market_cap);
           });
-          console.log(output);
           this.setState({
-            data: data,
-            labels: output,
+            labels: labelOutput,
+            marketCaps: marketCapOutput,
           })
       })
       .catch(err => console.log(err));
@@ -42,7 +42,7 @@ class App extends Component {
         <React.Fragment>
           <img src={logo} className="App-logo" alt="logo" />
         </React.Fragment>
-        <MarketChart data={this.state.data} />
+        <MarketChart labels={this.state.labels} marketCaps={this.state.marketCaps} />
       </div>
     );
   }
