@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import MarketChart from './MarketChart';
+import logo from '../logo.svg';
 
 import '../styles/App.css';
 
@@ -12,6 +13,7 @@ class App extends Component {
     super();
     this.state = {
       data: [],
+      labels: [],
     }
   }
 
@@ -19,7 +21,17 @@ class App extends Component {
     axios
       .get(URL)
       .then(response => {
-        this.setState({ data: response.data });
+          const data = response.data.data.slice();
+          console.log(data)
+          let output = [];
+          data.forEach(currency => {
+            output.push(currency.name);
+          });
+          console.log(output);
+          this.setState({
+            data: data,
+            labels: output,
+          })
       })
       .catch(err => console.log(err));
   }
@@ -27,6 +39,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <React.Fragment>
+          <img src={logo} className="App-logo" alt="logo" />
+        </React.Fragment>
         <MarketChart data={this.state.data} />
       </div>
     );
